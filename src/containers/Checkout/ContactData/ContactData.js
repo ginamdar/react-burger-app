@@ -4,6 +4,7 @@ import classes from './ContactData.css';
 import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
+import { connect } from 'react-redux';
 
 class ContactData extends Component {
     state = {
@@ -84,7 +85,7 @@ class ContactData extends Component {
                         value: 'cheapest', displayValue: 'Cheapest'
                     }]
                 },
-                valud: 'fastest',
+                value: '',
                 valid: true,
                 validation: {}
             },
@@ -125,11 +126,11 @@ class ContactData extends Component {
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
-        let formIsValid = true;
-        for (let inputIdentifier in updatedFormElement) {
-            formIsValid = formIsValid && updatedFormElement[inputIdentifier].valid;
+        let isFormValid = true;
+        for (let inputIdentifier in updatedOrderForm) {
+            isFormValid = updatedOrderForm[inputIdentifier].valid && isFormValid;
         }
-        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
+        this.setState({orderForm: updatedOrderForm, formIsValid: isFormValid});
     };
 
     checkValidity(value, rule) {
@@ -180,7 +181,13 @@ class ContactData extends Component {
 
         );
     }
-
 }
 
-export default ContactData;
+const mapStateToProps = (state) => {
+    return {
+        ingredients: state.ingredients,
+        price: state.totalPrice
+    }
+};
+
+export default connect(mapStateToProps)(ContactData);
