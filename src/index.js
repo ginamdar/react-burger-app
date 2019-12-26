@@ -6,13 +6,15 @@ import { Provider } from 'react-redux';
 import {createStore, compose, applyMiddleware, combineReducers} from "redux";
 import burgerBuilderReducer from "./store/reducers/burgerBuilder";
 import orderReducer from './store/reducers/order';
+import authReducer from './store/reducers/auth';
 import {BrowserRouter} from "react-router-dom";
 import thunk from 'redux-thunk';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({trace: true, traceLimit: 40}) || compose;
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
-    order: orderReducer
+    order: orderReducer,
+    auth: authReducer
 });
 
 const store = createStore(

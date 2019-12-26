@@ -30,7 +30,7 @@ class ContactData extends Component {
                     type: 'email',
                     placeholder: 'Your email'
                 },
-                value: '',
+                value: this.props.email,
                 validation: {
                     required: true
                 },
@@ -106,8 +106,9 @@ class ContactData extends Component {
             ingredients: this.props.ingredients,
             price: this.props.price,
             orderData: formData,
+            userId: this.props.userId
         };
-        this.props.onOrderBurger(order);
+        this.props.onOrderBurger(order, this.props.token);
     };
 
     inputChangedHandler = (event, inputIdentifier) => {
@@ -178,13 +179,16 @@ const mapStateToProps = (state) => {
     return {
         ingredients: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token,
+        userId: state.auth.userId,
+        email: state.auth.emailId
     }
 };
 
 const mapDispatchToPops = dispatch => {
     return {
-        onOrderBurger: (orderData) => dispatch(actionTypes.purchaseBurger(orderData))
+        onOrderBurger: (orderData, token) => dispatch(actionTypes.purchaseBurger(orderData, token))
     };
 };
 
