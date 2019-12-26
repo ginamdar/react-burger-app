@@ -19,7 +19,7 @@ class Orders extends Component {
                         <Order ingredients={order.ingredients} price={order.price} key={order.id}/>
                     ))
         }
-        console.log('orders:', orders);
+        // console.log('orders:', orders);
         return (
             <div>{orders}</div>
         );

@@ -27,7 +27,7 @@ export const purchaseBurger = (orderData, token) => {
         dispatch(purchaseBurgerStart());
         axios.post(`/orders.json?auth=${token}`, orderData)
             .then((resp) => {
-                console.log(resp.data);
+                // console.log(resp.data);
                 dispatch(purchaseBurgerSuccess(resp.data.name, orderData));
             })
             .catch((err) => {
@@ -44,7 +44,7 @@ export const purchaseInit = () => {
 };
 
 export const fetchOrdersSuccess = (orders) => {
-    console.log(`fetchOrdersSuccess orders: ${JSON.stringify(orders)}`);
+    // console.log(`fetchOrdersSuccess orders: ${JSON.stringify(orders)}`);
     return{
         type: actionTypes.FETCH_ORDERS_SUCCESS,
         orders
@@ -77,7 +77,7 @@ export const fetchOrders = (token, userId) => {
                         id: key
                     })
                 }
-                console.log('fetchOrders', fetchOrders);
+                // console.log('fetchOrders', fetchOrders);
                 dispatch(fetchOrdersSuccess(fetchOrders));
             }).catch((error) => {
                 dispatch(fetchOrdersFailed(error));

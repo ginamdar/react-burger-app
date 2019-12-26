@@ -7,6 +7,7 @@ import Input from '../../../components/UI/Input/Input';
 import { connect } from 'react-redux';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actionTypes from '../../../store/actions';
+import { checkValidity } from '../../../store/utility';
 
 class ContactData extends Component {
     state = {
@@ -97,7 +98,7 @@ class ContactData extends Component {
 
     orderHandler = (event) => {
         event.preventDefault();
-        console.log(`contact data: ${JSON.stringify(this.props.ingredients)}`);
+        // console.log(`contact data: ${JSON.stringify(this.props.ingredients)}`);
         const formData = {};
         for (let formElementIdentifier in this.state.orderForm) {
             formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value
@@ -115,7 +116,7 @@ class ContactData extends Component {
         const updatedOrderForm = {...this.state.orderForm};
         const updatedFormElement = { ...updatedOrderForm[inputIdentifier] };
         updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+        updatedFormElement.valid = checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
         let isFormValid = true;
@@ -124,20 +125,6 @@ class ContactData extends Component {
         }
         this.setState({orderForm: updatedOrderForm, formIsValid: isFormValid});
     };
-
-    checkValidity(value, rule) {
-        let isValid = true;
-        if (rule.require) {
-            isValid = value.trim() !== '';
-        }
-        if (isValid && rule.minLength) {
-            isValid = value.trim().length >= rule.minLength;
-        }
-        if (isValid && rule.maxLength) {
-            isValid = value.trim().length <= rule.maxLength;
-        }
-        return isValid;
-    }
 
     render() {
         const formElementsArray = [];

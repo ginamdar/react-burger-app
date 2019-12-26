@@ -6,6 +6,7 @@ import classes from './Auth.css';
 import * as actions from '../../store/actions';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
+import {checkValidity} from '../../store/utility';
 
 class Auth extends Component {
     state = {
@@ -54,32 +55,12 @@ class Auth extends Component {
             [controlName]: {
                 ...this.state.controls[controlName],
                 value: event.target.value,
-                valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
+                valid: checkValidity(event.target.value, this.state.controls[controlName].validation),
                 touched: true
             }
         };
         this.setState({controls: updatedControls});
     };
-
-    checkValidity(value, rule) {
-        let isValid = true;
-        if (rule.require) {
-            isValid = value.trim() !== '';
-        }
-        if (isValid && rule.minLength) {
-            isValid = value.trim().length >= rule.minLength;
-        }
-        if (isValid && rule.maxLength) {
-            isValid = value.trim().length <= rule.maxLength;
-        }
-
-        if (isValid && rule.isEmail) {
-            //const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9])/;
-            const pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-            isValid = pattern.test(value);
-        }
-        return isValid;
-    }
 
     submitHandler = (event) => {
         event.preventDefault();
