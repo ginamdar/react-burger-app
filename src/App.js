@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
-import Auth from './containers/Auth/Auth';
 import {Route, Switch, withRouter, Redirect} from "react-router";
 import Logout from './containers/Auth/Logout/Logout';
 import * as actions from './store/actions';
